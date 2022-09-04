@@ -1,0 +1,27 @@
+LOAD CSV with headers FROM "https://drive.google.com/uc?export=download&id=1_NAS5j98q7NDSjAQIyjV6yCShfPx7O_L" AS row 
+MERGE (u:User {id:row.user_id}) 
+MERGE (c:TeamChatSession {id:row.teamchat_session_id}) 
+MERGE (u)-[:Join{timeStamp: row.date}]->(c)
+
+LOAD CSV with headers FROM "https://drive.google.com/uc?export=download&id=1HDSq99ltyVASvsqY7Lz1Rt1kaJ3FWvcX" AS row 
+MERGE (u:User {id: row.user_id}) 
+MERGE (c:TeamChatSession {id: row.teamchat_session_id}) 
+MERGE (u)-[:Leaves{timeStamp: row.date}]->(c)
+
+LOAD CSV with headers FROM "https://drive.google.com/uc?export=download&id=1VYhvVsgEl-UfiQoX9BjZgZ5C9BdqaPww" AS row 
+MERGE (i:ChatItem {id: row.chat_item}) 
+MERGE (u:User {id: row.user_id}) 
+MERGE (i)-[:Mentioned{timeStamp: row.date}]->(u)
+
+LOAD CSV with headers FROM "https://drive.google.com/uc?export=download&id=16nyVWBAYKynU3PONuFn6ajdyArGnedNi" AS row 
+MERGE (i:ChatItem {id: row.chatid1}) 
+MERGE (j:ChatItem {id: row.chatid2}) 
+MERGE (i)-[:ResponseTo{timeStamp: row.date}]->(j)
+
+match g = (p:User) - [:Join] - (q:TeamChatSession) - [:Leaves] -()
+return g limit 100
+
+match g = (p:User) - [:Mentioned] - (a:ChatItem) - [:ResponseTo] -() 
+return g limit 100
+
+MATCH p= ()-->() RETURN p LIMIT 25
