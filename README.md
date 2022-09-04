@@ -11,4 +11,6 @@ https://drive.google.com/drive/folders/1kRlMDVR94O431XGDBnqnDNTEJtUf8ICH?usp=sha
 
 The code can be viewed in the "Code.ipynb" file.
 
+The graph analysis code can be viewd in the "Graph Analysis.txt" file.
+
 If anyone wants to use a part of the code. Please reference it. Thanks.
